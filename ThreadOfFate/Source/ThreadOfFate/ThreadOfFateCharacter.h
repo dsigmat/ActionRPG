@@ -49,6 +49,12 @@ protected:
     UFUNCTION(BlueprintCallable, Category = "Health")
     void Heal(float Amount);
 
+    UFUNCTION(BlueprintCallable, Category = "Health")
+    void HealArmor(float Amount);
+
+    /*UFUNCTION(BlueprintImplemetableEvent, Category = "Items")
+    AActor* DetermineOverlappingItem();*/
+
     void StartDamage();
 
     UFUNCTION(BlueprintCallable, Category = "Health")
@@ -63,6 +69,12 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items")
     bool IsOverlappingItem = false;
+
+    bool HasArmor = true;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+    float PlayerArmor = 0.00f;
+
 
 protected:
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

@@ -42,8 +42,13 @@ AThreadOfFateCharacter::AThreadOfFateCharacter()
     FollowCamera->bUsePawnControlRotation = false;                              // Camera does not rotate relative to arm
 
     IsSprinting = false;
+
     PlayerHealth = 1.00f;
+
     IsOverlappingItem = false;
+
+    PlayerArmor = 1.00f;
+    HasArmor = true;
 }
 
 void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -156,17 +161,43 @@ void AThreadOfFateCharacter::StartDamage()
 
 void AThreadOfFateCharacter::TakeDamage(float Amount)
 {
-    PlayerHealth -= Amount;
-    if (PlayerHealth < 0.00f)
+    UE_LOG(LogTemp, Warning, TEXT("We are taking damage for %f points."), Amount);
+
+    if (HasArmor)
     {
-        PlayerHealth = 0.00f;
+        PlayerArmor -= Amount;
+        if (PlayerArmor < 0.00f)
+        {
+            HasArmor = false;
+            PlayerHealth += PlayerArmor;
+            PlayerArmor = 0.00f;
+        }
+    }
+    else
+    {
+        PlayerHealth -= Amount;
+        if (PlayerHealth < 0.00f)
+        {
+            PlayerHealth = 0.00f;
+        }
     }
 }
 
-void AThreadOfFateCharacter::EquipItem() 
+void AThreadOfFateCharacter::EquipItem()
 {
     if (IsOverlappingItem)
     {
         UE_LOG(LogTemp, Warning, TEXT("We picked up an item"));
+    }
+}
+
+void AThreadOfFateCharacter::HealArmor(float Amount)
+{
+    PlayerArmor += Amount;
+    HasArmor = true;
+
+    if (PlayerArmor > 1.00f)
+    {
+        PlayerArmor = 1.00f;
     }
 }

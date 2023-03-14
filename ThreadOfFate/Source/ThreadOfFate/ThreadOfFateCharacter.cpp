@@ -43,11 +43,11 @@ AThreadOfFateCharacter::AThreadOfFateCharacter()
 
     IsSprinting = false;
     PlayerHealth = 1.00f;
+    IsOverlappingItem = false;
 }
 
 void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-    // Set up gameplay key bindings
     check(PlayerInputComponent);
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
     PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
@@ -58,6 +58,8 @@ void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
     PlayerInputComponent->BindAction("Heal", IE_Pressed, this, &AThreadOfFateCharacter::StartHealing);
     PlayerInputComponent->BindAction("Damage", IE_Released, this, &AThreadOfFateCharacter::StartDamage);
 
+    PlayerInputComponent->BindAction("Equip", IE_Pressed, this, &AThreadOfFateCharacter::EquipItem);
+
     PlayerInputComponent->BindAxis("MoveForward", this, &AThreadOfFateCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &AThreadOfFateCharacter::MoveRight);
 
@@ -66,11 +68,9 @@ void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
     PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
     PlayerInputComponent->BindAxis("LookUpRate", this, &AThreadOfFateCharacter::LookUpAtRate);
 
-    // handle touch devices
     PlayerInputComponent->BindTouch(IE_Pressed, this, &AThreadOfFateCharacter::TouchStarted);
     PlayerInputComponent->BindTouch(IE_Released, this, &AThreadOfFateCharacter::TouchStopped);
 
-    // VR headset functionality
     PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AThreadOfFateCharacter::OnResetVR);
 }
 
@@ -160,5 +160,13 @@ void AThreadOfFateCharacter::TakeDamage(float Amount)
     if (PlayerHealth < 0.00f)
     {
         PlayerHealth = 0.00f;
+    }
+}
+
+void AThreadOfFateCharacter::EquipItem() 
+{
+    if (IsOverlappingItem)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("We picked up an item"));
     }
 }

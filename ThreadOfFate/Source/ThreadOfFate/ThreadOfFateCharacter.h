@@ -54,10 +54,15 @@ protected:
     UFUNCTION(BlueprintCallable, Category = "Health")
     void TakeDamage(float Amount);
 
+    void EquipItem();
+
     bool IsSprinting = false;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
     float PlayerHealth = 0.00f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items")
+    bool IsOverlappingItem = false;
 
 protected:
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

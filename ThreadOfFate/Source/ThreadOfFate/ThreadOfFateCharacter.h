@@ -62,6 +62,10 @@ protected:
 
     void EquipItem();
 
+    void ZoomIn();
+
+    void StopZoom();
+
     bool IsSprinting = false;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
@@ -75,6 +79,8 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
     float PlayerArmor = 0.00f;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+    bool IsZoomed = false;
 
 protected:
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

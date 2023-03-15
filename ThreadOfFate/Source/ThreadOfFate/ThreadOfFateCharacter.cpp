@@ -49,6 +49,8 @@ AThreadOfFateCharacter::AThreadOfFateCharacter()
 
     PlayerArmor = 1.00f;
     HasArmor = true;
+
+    IsZoomed = false;
 }
 
 void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -64,6 +66,9 @@ void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
     PlayerInputComponent->BindAction("Damage", IE_Released, this, &AThreadOfFateCharacter::StartDamage);
 
     PlayerInputComponent->BindAction("Equip", IE_Pressed, this, &AThreadOfFateCharacter::EquipItem);
+
+    PlayerInputComponent->BindAction("Zoom", IE_Pressed, this, &AThreadOfFateCharacter::ZoomIn);
+    PlayerInputComponent->BindAction("Zoom", IE_Released, this, &AThreadOfFateCharacter::StopZoom);
 
     PlayerInputComponent->BindAxis("MoveForward", this, &AThreadOfFateCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &AThreadOfFateCharacter::MoveRight);
@@ -199,5 +204,37 @@ void AThreadOfFateCharacter::HealArmor(float Amount)
     if (PlayerArmor > 1.00f)
     {
         PlayerArmor = 1.00f;
+    }
+}
+
+void AThreadOfFateCharacter::ZoomIn()
+{
+    if (auto ThirdPersonCamera = GetCameraBoom())
+    {
+        ThirdPersonCamera->TargetArmLength = 150.0f;
+        ThirdPersonCamera->TargetOffset = FVector(0.0f, 20.0f, 70.0f);
+
+        if (auto characterMovement = GetCharacterMovement())
+        {
+            characterMovement->MaxWalkSpeed = 300.0f;
+        }
+
+        IsZoomed = true;
+    }
+}
+
+void AThreadOfFateCharacter::StopZoom() 
+{
+    if (auto ThirdPersonCamera = GetCameraBoom())
+    {
+        ThirdPersonCamera->TargetArmLength = 300.0f;
+        ThirdPersonCamera->TargetOffset = FVector(0.0f, 0.0f, 0.0f);
+
+        if (auto characterMovement = GetCharacterMovement())
+        {
+            characterMovement->MaxWalkSpeed = 600.0f;
+        }
+
+        IsZoomed = false;
     }
 }

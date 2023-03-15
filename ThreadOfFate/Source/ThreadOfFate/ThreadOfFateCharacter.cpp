@@ -40,9 +40,9 @@ AThreadOfFateCharacter::AThreadOfFateCharacter()
     FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom
                                                                                 // adjust to match the controller orientation
     FollowCamera->bUsePawnControlRotation = false;                              // Camera does not rotate relative to arm
-   
-    IsSprinting = false;    
-    IsOverlappingItem = false;    
+
+    IsSprinting = false;
+    IsOverlappingItem = false;
     HasArmor = true;
     IsZoomed = false;
 
@@ -55,6 +55,9 @@ AThreadOfFateCharacter::AThreadOfFateCharacter()
 
     PlayerArmor = 1.00f;
     PlayerHealth = 1.00f;
+
+    experienceToLevel = 2000.0f;
+    experiencePoints = 0.0f;
 }
 
 void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -227,7 +230,7 @@ void AThreadOfFateCharacter::ZoomIn()
     }
 }
 
-void AThreadOfFateCharacter::StopZoom() 
+void AThreadOfFateCharacter::StopZoom()
 {
     if (auto ThirdPersonCamera = GetCameraBoom())
     {
@@ -240,5 +243,16 @@ void AThreadOfFateCharacter::StopZoom()
         }
 
         IsZoomed = false;
+    }
+}
+
+void AThreadOfFateCharacter::GainExperience(float Amount)
+{
+    experiencePoints += Amount;
+    if (experiencePoints >= experienceToLevel)
+    {
+        ++CurrentLevel;
+        experiencePoints -= experienceToLevel;
+        experienceToLevel += 500.0f;
     }
 }

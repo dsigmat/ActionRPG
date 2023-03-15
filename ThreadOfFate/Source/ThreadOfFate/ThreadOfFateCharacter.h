@@ -52,6 +52,9 @@ protected:
     UFUNCTION(BlueprintCallable, Category = "Health")
     void HealArmor(float Amount);
 
+    UFUNCTION(BlueprintCallable, Category = "Stats")
+    void GainExperience(float Amount);
+
     /*UFUNCTION(BlueprintImplemetableEvent, Category = "Items")
     AActor* DetermineOverlappingItem();*/
 
@@ -97,6 +100,11 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
     int32 IntellectValue = 0;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+    float experienceToLevel = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+    float experiencePoints = 0.0f;
 
 protected:
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

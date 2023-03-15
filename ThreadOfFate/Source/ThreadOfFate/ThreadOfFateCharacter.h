@@ -82,6 +82,22 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     bool IsZoomed = false;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+    int32 CurrentLevel = 0;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+    int32 UpgradePoints = 0;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+    int32 StrengthValue = 0;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+    int32 DexterityValue = 0;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+    int32 IntellectValue = 0;
+
+
 protected:
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

@@ -40,17 +40,21 @@ AThreadOfFateCharacter::AThreadOfFateCharacter()
     FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom
                                                                                 // adjust to match the controller orientation
     FollowCamera->bUsePawnControlRotation = false;                              // Camera does not rotate relative to arm
+   
+    IsSprinting = false;    
+    IsOverlappingItem = false;    
+    HasArmor = true;
+    IsZoomed = false;
 
-    IsSprinting = false;
+    CurrentLevel = 1;
+    UpgradePoints = 5;
 
-    PlayerHealth = 1.00f;
-
-    IsOverlappingItem = false;
+    StrengthValue = 1;
+    DexterityValue = 1;
+    IntellectValue = 1;
 
     PlayerArmor = 1.00f;
-    HasArmor = true;
-
-    IsZoomed = false;
+    PlayerHealth = 1.00f;
 }
 
 void AThreadOfFateCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
